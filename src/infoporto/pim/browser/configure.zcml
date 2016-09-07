@@ -1,0 +1,45 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="infoporto.pim">
+
+  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
+  <include package="z3c.jbot" file="meta.zcml" />
+  <browser:jbot
+      directory="overrides"
+      layer="infoporto.pim.interfaces.IInfoportoPimLayer"
+      />
+
+  <!-- Publish static files -->
+  <browser:resourceDirectory
+      name="infoporto.pim"
+      directory="static"
+      />
+
+  <browser:page
+      name="mailboxview"
+      for="*"
+      layer="zope.interface.Interface"
+      class=".views.MailboxView"
+      template="templates/mailboxview.pt"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="readingconfirmationview"
+      for="*"
+      layer="zope.interface.Interface"
+      class=".views.ReadingConfirmationView"
+      template="templates/readingconfirmationview.pt"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      name="mark-as-read"
+      for="*"
+      permission="zope2.View"
+      class=".views.MarkAsRead"
+      />
+
+</configure>

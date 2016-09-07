@@ -1,4 +1,25 @@
 *.pyc
+*.egg-info
+*.mo
+*.pyc
+.installed.cfg
+.mr.developer.cfg
+.project
+.pydevproject
+.settings/
+bin/
+buildout-cache/
+develop-eggs/
+parts/
+src/*
+!src/infoporto
+var/
+htmlcov/
+.coverage
+*.log
+output.xml
+*.swp
+>>>>>>> first working
 *.pyo
 *.tmp*
 *.mo
