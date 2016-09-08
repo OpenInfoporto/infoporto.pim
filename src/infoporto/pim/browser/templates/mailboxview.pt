@@ -4,7 +4,7 @@
     i18n:domain="infoporto.pim">
 <body>
     <metal:content-core fill-slot="content-core">
-        <div class="mailbox-content">
+        <div class="mailbox-content" tal:condition="python: context.boxtype == 'messagesbox'">
             <table class="table mailbox-table">
                 <tr>
                     <th>Mittente</th>
@@ -17,35 +17,56 @@
                     <td tal:content="m/message_from" width="20%"/>
                     <td width="40%">
                         <h4 tal:content="m/subject" />
-                        <div class="mailbox-message-preview" tal:content="m/body" />
+                        <div class="mailbox-message-preview" tal:content="structure m/body/output" />
                     </td>
                     <td tal:content="m/created_at" width="20%"/>
                     <td>
-                        <span class="btn btn-primary mark-as-read-btn" 
-                                tal:attributes="data-uuid m/uuid" 
+                        <span class="btn btn-primary mark-as-read-btn"
+                                tal:attributes="data-uuid m/uuid"
                                 tal:condition="m/is_unread">
                         Leggi</span>
                     </td>
                 </tr>
                 </tal:block>
             </table>
-            
+
         <script>
             $('.mark-as-read-btn').on('click', function(){
-                console.log('Marking object '+$(this).data('uuid')+' as read'); 
+                console.log('Marking object '+$(this).data('uuid')+' as read');
                 $.ajax({
                     type: "POST",
                     url: portal_url+'/@@mark-as-read',
                     data: {'uuid': $(this).data('uuid')},
                     success: function(data){
-                        $(this).parent().html(data);
+                        $(this).remove();
                     }
                 });
                 return false;
             });
         </script>
-        
+
         </div>
+
+        <div class="confirmationbox-content" tal:condition="python: context.boxtype == 'readingnotificationsbox'">
+            <table class="table confirmationbox-table">
+                <tr>
+                    <th>Utente</th>
+                    <th>Messaggio</th>
+                    <th>Data di lettura</th>
+                    <th></th>
+                </tr>
+                <tal:block tal:repeat="c view/getConfirmations">
+                <tr>
+                    <td tal:content="c/user" width="20%"/>
+                    <td width="40%" tal:content="c/message" />
+                    <td tal:content="c/created_at" width="20%"/>
+                    <td></td>
+                </tr>
+                </tal:block>
+            </table>
+
+        </div>
+
     </metal:content-core>
 </body>
 </html>
