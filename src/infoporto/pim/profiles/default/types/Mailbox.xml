@@ -4,7 +4,7 @@
   <property name="title" i18n:translate="">Mailbox</property>
   <property name="description"
     i18n:translate=""></property>
-  <property name="icon_expr"></property>
+  <property name="icon_expr">string:${portal_url}/++resource++infoporto.pim/pim-mailbox.png</property>
   <property name="factory">Mailbox</property>
   <property name="add_view_expr">string:${folder_url}/++add++Mailbox</property>
   <property name="link_target"></property>
@@ -13,6 +13,7 @@
   <property name="filter_content_types">True</property>
   <property name="allowed_content_types">
     <element value="Message"/>
+    <element value="ReadingConfirmation"/>
   </property>
   <property name="allow_discussion">False</property>
   <property name="default_view">mailboxview</property>
@@ -24,6 +25,7 @@
   <property name="add_permission">cmf.AddPortalContent</property>
   <property name="klass">plone.dexterity.content.Container</property>
   <property name="behaviors">
+    <element value="plone.app.dexterity.behaviors.metadata.IBasic"/>
     <element value="plone.app.dexterity.behaviors.exclfromnav.IExcludeFromNavigation"/>
     <element value="plone.app.content.interfaces.INameFromTitle" />
   </property>

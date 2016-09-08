@@ -27,5 +27,10 @@
       handler=".setuphandlers.post_install">
   </genericsetup:importStep>
 
+  <subscriber
+      for=".interfaces.IMessage
+        zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".interfaces.deliverMessage"
+  />
 
 </configure>
