@@ -42,4 +42,13 @@
       class=".views.MarkAsRead"
       />
 
+  <browser:page
+      name="pim-inbox"
+      for="*"
+      permission="zope2.View"
+      class=".views.InboxView"
+      template="templates/inboxview.pt"
+      />
+
+
 </configure>

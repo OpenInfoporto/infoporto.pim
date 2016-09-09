@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+    lang="en"
+    metal:use-macro="context/main_template/macros/master"
+    i18n:domain="infoporto.pim">
+<body>
+    <metal:content-core fill-slot="content-core">
+        <div class="mailbox-content">
+            <table class="table mailbox-table">
+                <tr>
+                    <th>Mittente</th>
+                    <th>Oggetto</th>
+                    <th>Data</th>
+                    <th></th>
+                </tr>
+                <tal:block tal:repeat="m view/getMyMessages">
+                <tr>
+                    <td tal:content="m/message_from" width="20%"/>
+                    <td width="40%">
+                        <h4 tal:content="m/subject" />
+                        <div class="mailbox-message-preview" tal:content="structure m/body/output" />
+                    </td>
+                    <td tal:content="m/created_at" width="20%"/>
+                    <td>
+                        <span class="btn btn-primary mark-as-read-btn"
+                                tal:attributes="data-uuid m/uuid"
+                                tal:condition="m/is_unread">
+                        Leggi</span>
+                    </td>
+                </tr>
+                </tal:block>
+            </table>
+
+            <script>
+                $('.mark-as-read-btn').on('click', function(){
+                    console.log('Marking object '+$(this).data('uuid')+' as read');
+                    $.ajax({
+                        type: "POST",
+                        url: portal_url+'/@@mark-as-read',
+                        data: {'uuid': $(this).data('uuid')},
+                        success: function(data){
+                            $(this).remove();
+                        }
+                    });
+                    return false;
+                });
+            </script>
+
+        </div>
+
+    </metal:content-core>
+</body>
+</html>

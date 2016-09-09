@@ -43,7 +43,7 @@ class MailboxView(BrowserView):
 
         for confirmation in confirmations:
             confirmation = confirmation.getObject()
-            messages = portal_catalog(UID=confirmation.message)
+            messages = api.content.find(UID=confirmation.message)
             if messages:
                 message = messages[0].getObject()
 
@@ -80,4 +80,30 @@ class MarkAsRead(BrowserView):
 class ReadingConfirmationView(BrowserView):
 
     pass
+
+
+class InboxView(BrowserView):
+
+    def getMyMessages(self):
+        results = list()
+
+        current_user = api.user.get_current().getUserName()
+
+        logger.info('getMyMessage called for %s' % current_user)
+
+        messages = api.content.find(portal_type="Message")
+
+        for msg in messages:
+            msg = msg.getObject()
+
+            results.append({
+                'message_from': msg.message_from,
+                'subject': msg.subject,
+                'body': msg.body,
+                'created_at': msg.creation_date,
+                'is_unread': True, #TODO: make reading confirm list
+                'uuid': msg.UID,
+            })
+
+        return results
 
