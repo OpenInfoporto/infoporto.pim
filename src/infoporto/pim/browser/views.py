@@ -107,3 +107,11 @@ class InboxView(BrowserView):
 
         return results
 
+
+class CountUnread(BrowserView):
+    def __call__(self):   
+        current_user = api.user.get_current().getUserName()
+
+        logger.info('countUnread called for %s' % current_user)
+
+        return 1

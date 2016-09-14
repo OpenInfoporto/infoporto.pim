@@ -51,4 +51,11 @@
       />
 
 
+  <browser:page
+      name="count-unread"
+      for="*"
+      permission="zope2.View"
+      class=".views.CountUnread"
+      />
+
 </configure>
